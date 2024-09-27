@@ -1,4 +1,4 @@
-package main
+package tasks
 
 import (
 	"math"
@@ -9,7 +9,6 @@ func IsInCircle(x, y float64) bool {
 	const circleRadius = 1
 
 	return circleRadius >= math.Sqrt(x*x+y*y)
-
 }
 
 /*

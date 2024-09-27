@@ -2,12 +2,13 @@ package main
 
 import (
 	"math"
+	"tasks/tasks"
 	"testing"
 )
 
 type task2 struct {
-	input  float64
-	result float64
+	in  float64
+	out float64
 }
 
 var testsTask2 = []task2{
@@ -20,11 +21,12 @@ var testsTask2 = []task2{
 
 func TestTask2(t *testing.T) {
 	for _, pair := range testsTask2 {
-		v := Task2(pair.input)
-		if math.Abs(v-pair.result) > pair.input {
+		v := tasks.Task2(pair.in)
+		if math.Abs(v-pair.out) > pair.in {
 			t.Error(
-				"for", pair.input,
-				"expected", math.Abs(v-pair.result), ">", pair.input,
+				"for", pair.in,
+				"expected", pair.out,
+				"got", v,
 			)
 		}
 	}

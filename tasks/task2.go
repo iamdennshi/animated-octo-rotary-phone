@@ -1,4 +1,4 @@
-package main
+package tasks
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"math/rand"
 )
 
-func countNumbersAfterDot(number float64) int {
+func CountNumbersAfterDot(number float64) int {
 	var count int
 
 	for number < 1 {
@@ -16,8 +16,8 @@ func countNumbersAfterDot(number float64) int {
 	return count
 }
 
-func shift(number float64, digit int) int {
-	for range digit {
+func leftShift(number float64, steps int) int {
+	for range steps {
 		number *= 10
 	}
 	return int(number)
@@ -30,12 +30,11 @@ func shift(number float64, digit int) int {
 Пользователь задаёт точность вычисления, например, 0.01 или 0.1.
 */
 func Task2(precision float64) float64 {
-
 	if precision > 1 {
 		panic("precision > 1")
 	}
 
-	numbersAfterDot := countNumbersAfterDot(precision)
+	numbersAfterDot := CountNumbersAfterDot(precision)
 
 	if precision*math.Pow(10, float64(numbersAfterDot)) != 1 {
 		expected := 1 / (float64(numbersAfterDot) * 10)
@@ -44,10 +43,8 @@ func Task2(precision float64) float64 {
 	}
 
 	var n, k uint64
-	var curDigit int
+	var curDigit, prevDigit, matched int
 	var cur float64
-	prevDigit := -1
-	matched := 0
 	step := uint64(1000 * math.Pow(10, float64(numbersAfterDot)))
 
 LOOP:
@@ -61,11 +58,10 @@ LOOP:
 				k++
 			}
 		}
-
 		cur = 4.0 * float64(k) / float64(n)
 
 		// numbersAfterDot+1 чтобы была стабильна цифра которая идет после нужной
-		curDigit = shift(cur, numbersAfterDot+1)
+		curDigit = leftShift(cur, numbersAfterDot+1)
 
 		if prevDigit == curDigit {
 			matched++
@@ -78,8 +74,6 @@ LOOP:
 		if matched == numbersAfterDot {
 			break LOOP
 		}
-
 	}
-
 	return cur
 }

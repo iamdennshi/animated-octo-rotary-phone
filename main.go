@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
+	"tasks/tasks"
 	"time"
 )
 
 const textOfBadExec = "Usage: go run . <task1 | task2>"
 
 func main() {
-
 	if len(os.Args) != 2 {
 		fmt.Println(textOfBadExec)
 		return
@@ -21,7 +21,7 @@ func main() {
 		fmt.Print("Enter a number of iterations for task1: ")
 		fmt.Scanln(&n)
 		go spiner(100)
-		result := Task1(n)
+		result := tasks.Task1(n)
 		fmt.Printf("\rtask1(%v): %v", n, result)
 
 	case "task2":
@@ -29,7 +29,7 @@ func main() {
 		fmt.Print("Enter a precision for task2 (1, 0.1, 0.01 ...): ")
 		fmt.Scanln(&precision)
 		go spiner(100)
-		result := Task2(precision)
+		result := tasks.Task2(precision)
 		fmt.Printf("\rtask2(%v): %v", precision, result)
 
 	default:
