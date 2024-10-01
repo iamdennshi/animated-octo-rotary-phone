@@ -31,3 +31,54 @@ func TestTask2(t *testing.T) {
 		}
 	}
 }
+
+type search struct {
+	in_seq  []int
+	in_elem int
+	out     int
+}
+
+var searchTests = []search{
+	{[]int{}, 1, -1},
+
+	{[]int{1, 2, 3}, 1, 0},
+	{[]int{1, 2, 3}, 3, 2},
+	{[]int{1, 2, 3}, 2, 1},
+	{[]int{1, 2, 3}, 0, -1},
+	{[]int{1, 2, 3}, 4, -1},
+
+	{[]int{1, 2, 3, 4}, 1, 0},
+	{[]int{1, 2, 2, 4}, 3, -1},
+	{[]int{1, 2, 2, 4}, 4, 3},
+	{[]int{1, 2, 3, 4}, 2, 1},
+	{[]int{1, 2, 3, 4}, 0, -1},
+	{[]int{1, 2, 3, 4}, 5, -1},
+}
+
+func TestBinarySearch(t *testing.T) {
+	for _, data := range searchTests {
+		v, _ := tasks.BinarySearch(data.in_seq, data.in_elem)
+		if v != data.out {
+			t.Error(
+				"for", data.in_elem,
+				"in", data.in_seq,
+				"expected", data.out,
+				"got", v,
+			)
+		}
+	}
+}
+
+func TestInterpolationSearch(t *testing.T) {
+	for _, data := range searchTests {
+		v, _ := tasks.InterpolationSearch(data.in_seq, data.in_elem)
+		if v != data.out {
+			t.Error(
+				"for", data.in_elem,
+				"in", data.in_seq,
+				"expected", data.out,
+				"got", v,
+			)
+		}
+	}
+}

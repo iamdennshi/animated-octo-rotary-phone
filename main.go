@@ -7,9 +7,10 @@ import (
 	"time"
 )
 
-const textOfBadExec = "Usage: go run . <task1 | task2>"
+const textOfBadExec = "Usage: go run . <task1 | task2 | task3 ...>"
 
 func main() {
+
 	if len(os.Args) != 2 {
 		fmt.Println(textOfBadExec)
 		return
@@ -31,6 +32,9 @@ func main() {
 		go spiner(100)
 		result := tasks.Task2(precision)
 		fmt.Printf("\rtask2(%v): %v", precision, result)
+
+	case "task3":
+		tasks.Task3()
 
 	default:
 		fmt.Println(textOfBadExec)
