@@ -118,6 +118,8 @@ func genSortedCubeSeq(n, a, b int) []int {
 * Сравнить эти алгоритмы по количеству шагов поиска.
  */
 func Task3() {
+	// Количество испытаний
+	N := 1000
 
 	// Количество элементов в последовательностях
 	seqIters := []int{30, 3_000, 3_000_000}
@@ -135,16 +137,44 @@ func Task3() {
 		genSortedSeq(seqIters[2], 1, 10_000),
 	}
 
-	// Случайные элементы которые нужно найти
-	xs := []int{seqes[0][rand.Intn(seqIters[0])], seqes[1][rand.Intn(seqIters[1])], seqes[2][rand.Intn(seqIters[2])]}
-
 	for i := range len(seqIters) {
 		fmt.Printf("Для %v последовательности из %v элементов\n", seqNames[i], seqIters[i])
 
-		_, iters := InterpolationSearch(seqes[i], xs[i])
-		fmt.Printf("- InterpolationSearch выполнился за %v итераций\n", iters)
+		var totalIters int
+		for range N {
+			// Случайный элемент последовательности который нужно найти
+			randNum := seqes[i][rand.Intn(seqIters[i])]
+			_, iters := InterpolationSearch(seqes[i], randNum)
+			totalIters += iters
+		}
+		fmt.Printf("- InterpolationSearch в среднем выполнился за %v итераций\n", totalIters/N)
 
-		_, iters = BinarySearch(seqes[i], xs[i])
-		fmt.Printf("- BinarySearch выполнился за %v итераций\n\n", iters)
+		totalIters = 0
+		for range N {
+			// Случайный элемент последовательности который нужно найти
+			randNum := seqes[i][rand.Intn(seqIters[i])]
+			_, iters := BinarySearch(seqes[i], randNum)
+			totalIters += iters
+		}
+		fmt.Printf("- BinarySearch в среднем выполнился за %v итераций\n\n", totalIters/N)
+
 	}
+	/* Количество испытаний - 1000 (т.е. 1000 раз прогонялся соответсвующий алгоритм для разных значений в соответсвующей последовательности)
+
+	Для экспоненциальной последовательности из 30 элементов
+	- InterpolationSearch в среднем выполнился за 11 итераций
+	- BinarySearch в среднем выполнился за 4 итераций
+
+	Для кубической последовательности из 3000 элементов
+	- InterpolationSearch в среднем выполнился за 3 итераций
+	- BinarySearch в среднем выполнился за 10 итераций
+
+	Для линейной последовательности из 3000000 элементов
+	- InterpolationSearch в среднем выполнился за 3 итераций
+	- BinarySearch в среднем выполнился за 20 итераций
+	*/
+
+	// Выводы:
+	// 1. Интерполяционный поиск занимает в среднем в 3 раза больше итераций если входная последовательность имеет экспоненциальный характер
+	// 2. Интерполяционный поиск занимает в среднем 2-3 итерации в других последовательностях до 3 мл. элементов
 }
